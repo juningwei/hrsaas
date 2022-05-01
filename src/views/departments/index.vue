@@ -11,24 +11,24 @@
           <!-- 说明el-tree里面的这个内容 就是插槽内容 => 填坑内容  => 有多少个节点循环多少次 -->
           <!-- scope-scope 是 tree组件传给每个节点的插槽的内容的数据 -->
           <!-- 顺序一定是 执行slot-scope的赋值 才去执行 props的传值 -->
-          <tree-tools slot-scope="{ data }" :tree-node="data" />
+          <tree-tools slot-scope="{ data }" :tree-node="data"  @delDepts="getDepartments"/>
         </el-tree>
       </el-card>
     </div>
   </div>
 </template>
 <script>
-import TreeTools from './components/tree-tools.vue'
-import { getDepartments } from '@/api/departments'
-import {tranListToTreeData} from '@/utils'
+import TreeTools from "./components/tree-tools.vue";
+import { getDepartments } from "@/api/departments";
+import { tranListToTreeData } from "@/utils";
 
 export default {
-  components : {
-    TreeTools
+  components: {
+    TreeTools,
   },
   data() {
     return {
-      company: { name: '江苏传智播客教育科技股份有限公司', manager: '负责人' },
+      company: { name: "江苏传智播客教育科技股份有限公司", manager: "负责人" },
       departs: [
         {
           name: "总裁办",
@@ -44,16 +44,18 @@ export default {
     };
   },
   created() {
-    this.getDepartments() // 调用自身的方法
+    this.getDepartments(); // 调用自身的方法
   },
   methods: {
     async getDepartments() {
-      const result = await getDepartments()
-      this.company = { name: result.companyName, manager: '负责人' } // 这里定义一个空串  因为 它是根 所有的子节点的数据pid 都是 ""
-   console.log(result.depts);
-   this.departs = tranListToTreeData(result.depts, '')
-    }
-  }
+      console.log("222222222");
+      const result = await getDepartments();
+      this.company = { name: result.companyName, manager: "负责人" }; // 这里定义一个空串  因为 它是根 所有的子节点的数据pid 都是 ""
+      console.log(result.depts);
+      this.departs = tranListToTreeData(result.depts, "");
+    },
+    
+  },
 };
 </script>
 

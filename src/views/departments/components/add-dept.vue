@@ -102,6 +102,7 @@ export default {
           // 表示可以提交了
           await addDepartments({ ...this.formData, pid: this.treeNode.id }) // 调用新增接口 添加父部门的id
           this.$emit('addDepts')
+          this.$emit('update:showDialog', false)
 
         }
       })

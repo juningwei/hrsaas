@@ -46,8 +46,14 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    Message.error(error);
-    return Promise.reject(error);
+    if (error.response && error.response.data && error.response.data.code === 10002) {
+      // 当等于10002的时候 表示 后端告诉我token超时了
+      store.dispatch('user/logout') // 登出action 删除token
+      router.push('/login')
+    } else {
+      Message.error(error.message) // 提示错误信息
+    }
+    return Promise.reject(error)
   }
 );
 

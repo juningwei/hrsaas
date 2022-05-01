@@ -16,7 +16,7 @@
       </el-card>
      
     </div>
-     <add-dept :show-dialog="showDialog" :tree-node="node"/>
+     <add-dept :show-dialog="showDialog" :tree-node="node" @addDepts="getDepartments"/>
   </div>
 </template>
 <script>
@@ -55,7 +55,6 @@ export default {
   },
   methods: {
     async getDepartments() {
-      console.log("222222222");
       const result = await getDepartments();
       this.company = { name: result.companyName, manager: "负责人" }; // 这里定义一个空串  因为 它是根 所有的子节点的数据pid 都是 ""
       console.log(result.depts);

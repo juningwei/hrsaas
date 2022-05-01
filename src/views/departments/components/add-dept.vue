@@ -3,7 +3,7 @@
   <el-dialog title="新增部门" :visible="showDialog">
     <!-- 表单组件  el-form   label-width设置label的宽度   -->
     <!-- 匿名插槽 -->
-    <el-form label-width="120px" :model="formData" :rules="rules">
+    <el-form label-width="120px" ref="deptForm" :model="formData" :rules="rules">
       <el-form-item label="部门名称" prop="name">
         <el-input v-model="formData.name" style="width:80%" placeholder="1-50个字符" />
       </el-form-item>
@@ -23,7 +23,7 @@
     <el-row slot="footer" type="flex" justify="center">
       <!-- 列被分为24 -->
       <el-col :span="6">
-        <el-button type="primary" size="small">确定</el-button>
+        <el-button type="primary" size="small" @click="btnOK">确定</el-button>
         <el-button size="small">取消</el-button>
       </el-col>
     </el-row>
@@ -33,6 +33,8 @@
 <script>
 import { getDepartments } from '@/api/departments'
 import  { getEmployeeSimple }   from '@/api/employees'
+import { addDepartments } from '@/api/departments'
+
 
 export default {
   // 需要传入一个props变量来控制 显示或者隐藏
@@ -92,6 +94,17 @@ export default {
     // 获取员工简单列表数据
     async  getEmployeeSimple() {
       this.peoples = await getEmployeeSimple()
+    },
+    // 点击确定时触发
+    btnOK() {
+      this.$refs.deptForm.validate(async isOK => {
+        if (isOK) {
+          // 表示可以提交了
+          await addDepartments({ ...this.formData, pid: this.treeNode.id }) // 调用新增接口 添加父部门的id
+          this.$emit('addDepts')
+
+        }
+      })
     }
   },
 }

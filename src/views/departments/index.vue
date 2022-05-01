@@ -19,6 +19,9 @@
 </template>
 <script>
 import TreeTools from './components/tree-tools.vue'
+import { getDepartments } from '@/api/departments'
+import {tranListToTreeData} from '@/utils'
+
 export default {
   components : {
     TreeTools
@@ -40,6 +43,17 @@ export default {
       },
     };
   },
+  created() {
+    this.getDepartments() // 调用自身的方法
+  },
+  methods: {
+    async getDepartments() {
+      const result = await getDepartments()
+      this.company = { name: result.companyName, manager: '负责人' } // 这里定义一个空串  因为 它是根 所有的子节点的数据pid 都是 ""
+   console.log(result.depts);
+   this.departs = tranListToTreeData(result.depts, '')
+    }
+  }
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <!-- 新增部门的弹层 -->
-  <el-dialog title="新增部门" :visible="showDialog">
+  <el-dialog title="新增部门" :visible="showDialog" @close="btnCancel">
     <!-- 表单组件  el-form   label-width设置label的宽度   -->
     <!-- 匿名插槽 -->
     <el-form label-width="120px" ref="deptForm" :model="formData" :rules="rules">
@@ -24,7 +24,7 @@
       <!-- 列被分为24 -->
       <el-col :span="6">
         <el-button type="primary" size="small" @click="btnOK">确定</el-button>
-        <el-button size="small">取消</el-button>
+        <el-button size="small" @click="btnCancel">取消</el-button>
       </el-col>
     </el-row>
   </el-dialog>
@@ -106,6 +106,11 @@ export default {
 
         }
       })
+    },
+    btnCancel() {
+      this.$refs.deptForm.resetFields() // 重置校验字段
+      this.$emit('update:showDialog', false)
+
     }
   },
 }

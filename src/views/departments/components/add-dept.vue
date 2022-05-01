@@ -35,7 +35,7 @@ import { getDepartments } from '@/api/departments'
 import  { getEmployeeSimple }   from '@/api/employees'
 import { addDepartments } from '@/api/departments'
 import { getDepartDetail } from '@/api/departments'
-
+import { updateDepartments } from '@/api/departments'
 
 export default {
   // 需要传入一个props变量来控制 显示或者隐藏
@@ -106,7 +106,16 @@ export default {
       this.$refs.deptForm.validate(async isOK => {
         if (isOK) {
           // 表示可以提交了
-          await addDepartments({ ...this.formData, pid: this.treeNode.id }) // 调用新增接口 添加父部门的id
+
+        // 要分清楚现在是编辑还是新增
+          if (this.formData.id) {
+            // 编辑模式  调用编辑接口
+            await updateDepartments(this.formData)
+          } else {
+            // 新增模式
+            await addDepartments({ ...this.formData, pid: this.treeNode.id }) // 调用新增接口 添加父部门的id
+          }
+
           this.$emit('addDepts')
           this.$emit('update:showDialog', false)
 

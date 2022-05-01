@@ -34,6 +34,7 @@
 import { getDepartments } from '@/api/departments'
 import  { getEmployeeSimple }   from '@/api/employees'
 import { addDepartments } from '@/api/departments'
+import { getDepartDetail } from '@/api/departments'
 
 
 export default {
@@ -111,7 +112,11 @@ export default {
       this.$refs.deptForm.resetFields() // 重置校验字段
       this.$emit('update:showDialog', false)
 
-    }
+    } ,
+    // 获取部门详情
+    async  getDepartDetail(id) {
+      this.formData = await getDepartDetail(id)
+  }
   },
 }
 </script>

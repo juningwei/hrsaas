@@ -16,7 +16,7 @@
       </el-card>
      
     </div>
-     <add-dept :show-dialog.sync="showDialog" :tree-node="node" @addDepts="getDepartments"/>
+     <add-dept ref="addDept" :show-dialog.sync="showDialog" :tree-node="node" @addDepts="getDepartments"/>
   </div>
 </template>
 <script>
@@ -70,6 +70,7 @@ export default {
       console.log("aaaaaa");
       this.showDialog = true
       this.node = node // 赋值操作的节点
+       this.$refs.addDept.getDepartDetail(node.id) 
     }
   },
 };

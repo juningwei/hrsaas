@@ -6,8 +6,6 @@
   })
 }
 export function delDepartments(id) {
-  console.log("delDepartments");
-
   return request({
     url: `/company/department/${id}`,
     method: 'delete'
@@ -18,5 +16,10 @@ export function addDepartments(data) {
     url: '/company/department',
     method: 'post',
     data
+  })
+}
+export function getDepartDetail(id) {
+  return request({
+    url: `/company/department/${id}`
   })
 }

@@ -32,7 +32,7 @@ export default {
   },
   data() {
     return {
-      company: { name: "江苏传智播客教育科技股份有限公司", manager: "负责人" },
+      company: { name: "江苏传智播客教育科技股份有限公司", manager: "负责人", id: "" },
       departs: [
         {
           name: "总裁办",

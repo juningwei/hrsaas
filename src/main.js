@@ -17,6 +17,9 @@ import '@/permission' // permission control
 
 import * as directives from '@/directives'
 
+import Component from '@/components'
+Vue.use(Component) // 注册自己的插件
+
 Object.keys(directives).forEach(key => {
   // 注册自定义指令
   Vue.directive(key, directives[key])

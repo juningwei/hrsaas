@@ -35,3 +35,10 @@ export function getRoleDetail(id) {
     url: `/sys/role/${id}`
   })
 }
+export function addRole(data) {
+  return request({
+    url: '/sys/role',
+    data,
+    method: 'post'
+  })
+}

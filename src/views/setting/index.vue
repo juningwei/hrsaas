@@ -7,11 +7,8 @@
           <el-tab-pane label="角色管理">
             <!-- 新增角色按钮 -->
             <el-row style="height:60px">
-              <el-button
-                icon="el-icon-plus"
-                size="small"
-                type="primary"
-              >新增角色</el-button>
+              <el-button type="primary" size="small" @click="showDialog = true">新增角色</el-button>
+
             </el-row>
             <!-- 表格 -->
              <el-table border="" :data="list">
@@ -158,21 +155,23 @@ export default {
           await updateRole(this.roleForm)
         } else {
           // 新增业务
+          await addRole(this.roleForm)
         }
         // 重新拉取数据
         this.getRoleList()
         this.$message.success('操作成功')
-        this.showDialog = false
+        this.showDialog = false // 关闭弹层  =>  触发el-dialog的事件close事件
       } catch (error) {
         console.log(error)
       }
     },
     btnCancel() {
-      this.$refs.roleForm.reset
       this.roleForm = {
-        
+        name: '',
+        description: ''
       }
-      this.$refs.roleForm.resetFields() // 重置校验字段
+      // 移除校验
+      this.$refs.roleForm.resetFields()
       this.showDialog = false
     }
   }

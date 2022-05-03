@@ -11,3 +11,9 @@ export function getCompanyInfo(companyId) {
     url: `/company/${companyId}`
   })
 }
+export function deleteRole(id) {
+  return request({
+    url: `/sys/role/${id}`,
+    method: 'delete'
+  })
+}

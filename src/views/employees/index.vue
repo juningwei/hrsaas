@@ -6,8 +6,7 @@
         <template slot="after">
           <el-button size="small" type="warning">导入</el-button>
           <el-button size="small" type="danger">导出</el-button>
-          <el-button size="small" type="primary">新增员工</el-button>
-        </template>
+          <el-button icon="plus" type="primary" size="small" @click="showDialog = true">新增员工</el-button>        </template>
       </page-tools>
       <!-- 放置表格和分页 -->
       <el-card v-loading="loading">
@@ -49,6 +48,7 @@
           />
         </el-row>
       </el-card>
+      <add-employee :show-dialog.sync="showDialog" />
     </div>
   </div>
 </template>
@@ -56,7 +56,11 @@
 <script>
 import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
+import AddEmployee from './components/add-employee.vue'
 export default {
+  components: {
+    AddEmployee
+  },
   data() {
     return {
       loading: false,
@@ -65,7 +69,8 @@ export default {
         page: 1, // 当前页码
         size: 10,
         total: 0 // 总数
-      }
+      },
+      showDialog: false
 
     }
   },

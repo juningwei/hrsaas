@@ -42,6 +42,11 @@ export default {
       this.imgUrl = file.url
       this.showDialog = true
     },
+    handleRemove(file) {
+      // file是点击删除的文件
+    //   将原来的文件给排除掉了 剩下的就是最新的数组了
+      this.fileList = this.fileList.filter(item => item.uid !== file.uid)
+    },
   },
 };
 </script>

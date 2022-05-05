@@ -35,7 +35,8 @@ export default {
         },
       ], // 图片地址设置为数组
       showDialog: false, // 控制显示弹层
-      imgUrl: ''
+      imgUrl: '',
+      currentFileUid: ''
     };
   },
   computed: {
@@ -46,7 +47,6 @@ export default {
   },
   methods: {
     preview(file) {
-      console.log(file);
       this.imgUrl = file.url
       this.showDialog = true
     },
@@ -69,10 +69,13 @@ export default {
         this.$message.error('图片大小最大不能超过5M')
         return false
       }
+      this.currentFileUid = file.uid;
       return true
     },
+    changeFile(file, fileList) {
+      this.fileList = fileList.map(item => item)
+    },
     upload(params) {
-      console.log(params.file);
       if (params.file) {
         // 执行上传操作
         cos.putObject({
@@ -82,9 +85,29 @@ export default {
           Body: params.file, // 要上传的文件对象
           StorageClass: 'STANDARD' // 上传的模式类型 直接默认 标准模式即可
           // 上传到腾讯云 =》 哪个存储桶 哪个地域的存储桶 文件  格式  名称 回调
-        }, function(err, data) {
+        }, (err, data) => {
           // data返回数据之后 应该如何处理
-          console.log(err || data)
+          // console.log(err || data)
+          if (!err && data.statusCode === 200) {
+            //   此时说明文件上传成功  要获取成功的返回地址
+            // fileList才能显示到上传组件上 此时我们要将fileList中的数据的url地址变成 现在上传成功的地址
+            // 目前虽然是一张图片 但是请注意 我们的fileList是一个数组
+            // 需要知道当前上传成功的是哪一张图片
+            console.log(this.fileList);
+
+            this.fileList = this.fileList.map(item => {
+              // 去找谁的uid等于刚刚记录下来的id
+              if (item.uid === this.currentFileUid) {
+                // 将成功的地址赋值给原来的url属性
+                return { url: 'http://' + data.Location, upload: true }
+                // upload 为true 表示这张图片已经上传完毕 这个属性要为我们后期应用的时候做标记
+                // 保存  => 图片有大有小 => 上传速度有快又慢 =>要根据有没有upload这个标记来决定是否去保存
+              }
+              return item
+            })
+            console.log(this.fileList);
+            // 将上传成功的地址 回写到了fileList中 fileList变化  =》 upload组件 就会根据fileList的变化而去渲染视图
+          }
 
         })
       }

@@ -7,6 +7,7 @@
       :on-preview="preview"
       :on-remove="handleRemove"
       :file-list="fileList"
+      :class="{disabled: fileComputed }"
     >
       <i class="el-icon-plus" />
     </el-upload>
@@ -29,6 +30,12 @@ export default {
       imgUrl: ''
     };
   },
+  computed: {
+    // 设定一个计算属性 判断是否已经上传完了一张
+    fileComputed() {
+      return this.fileList.length === 1
+    }
+  },
   methods: {
     preview(file) {
       console.log(file);
@@ -38,3 +45,8 @@ export default {
   },
 };
 </script>
+
+<style>
+.disabled .el-upload--picture-card {
+  display: none
+}</style>

@@ -14,6 +14,7 @@
     >
       <i class="el-icon-plus" />
     </el-upload>
+    <el-progress v-if="showPercent" style="width: 180px" :percentage="percent" />
     <el-dialog title="图片" :visible.sync="showDialog">
       <img :src="imgUrl" style="width: 100%" alt="" />
     </el-dialog>
@@ -36,7 +37,9 @@ export default {
       ], // 图片地址设置为数组
       showDialog: false, // 控制显示弹层
       imgUrl: '',
-      currentFileUid: ''
+      currentFileUid: '',
+      percent: 0,
+      showPercent: false
     };
   },
   computed: {
@@ -70,6 +73,7 @@ export default {
         return false
       }
       this.currentFileUid = file.uid;
+      this.showPercent = true;
       return true
     },
     changeFile(file, fileList) {
@@ -83,8 +87,11 @@ export default {
           Region: 'ap-nanjing', // 地域
           Key: params.file.name, // 文件名
           Body: params.file, // 要上传的文件对象
-          StorageClass: 'STANDARD' // 上传的模式类型 直接默认 标准模式即可
+          StorageClass: 'STANDARD', // 上传的模式类型 直接默认 标准模式即可
           // 上传到腾讯云 =》 哪个存储桶 哪个地域的存储桶 文件  格式  名称 回调
+          onProgress: (params) => {
+            this.percent = params.percent * 100
+          }
         }, (err, data) => {
           // data返回数据之后 应该如何处理
           // console.log(err || data)
@@ -105,8 +112,11 @@ export default {
               }
               return item
             })
-            console.log(this.fileList);
             // 将上传成功的地址 回写到了fileList中 fileList变化  =》 upload组件 就会根据fileList的变化而去渲染视图
+            setTimeout(() => {
+              this.showPercent = false // 隐藏进度条
+              this.percent = 0 // 进度归0
+            }, 2000)
           }
 
         })

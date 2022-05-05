@@ -48,6 +48,8 @@ Vue.use(ElementUI, { locale })
 import Print from 'vue-print-nb'
 Vue.use(Print);
 
+import CheckPermission from '@/mixin/checkPermission'
+Vue.mixin(CheckPermission)
 
 Vue.config.productionTip = false
 

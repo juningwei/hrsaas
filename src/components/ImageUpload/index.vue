@@ -31,9 +31,7 @@ export default {
   data() {
     return {
       fileList: [
-        {
-          url: "http://i1.shaodiyejin.com/uploads/tu/201910/9999/457d40101f.jpg",
-        },
+        
       ], // 图片地址设置为数组
       showDialog: false, // 控制显示弹层
       imgUrl: '',

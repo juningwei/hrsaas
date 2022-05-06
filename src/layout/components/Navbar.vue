@@ -13,8 +13,12 @@
     <!-- <breadcrumb class="breadcrumb-container" /> -->
 
     <div class="right-menu">
+      
+      <lang class="right-menu-item" />
+      <!-- 放置主题 -->
+      <theme-picker class="right-menu-item" />
+      <!-- 放置全屏插件 -->
       <screen-full class="right-menu-item" />
-      <theme-picker/>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img v-imagerror="defaultImg" :src="staffPhoto" class="user-avatar" />

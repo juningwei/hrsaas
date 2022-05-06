@@ -14,6 +14,7 @@
 
     <div class="right-menu">
       <screen-full class="right-menu-item" />
+      <theme-picker/>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img v-imagerror="defaultImg" :src="staffPhoto" class="user-avatar" />
